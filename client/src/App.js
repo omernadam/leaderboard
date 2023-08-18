@@ -12,7 +12,7 @@ const App = () => {
 
   const fetchLeaderboardData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/leaderboard');
+      const response = await fetch('http://localhost:3010/leaderboard');
       const data = await response.json();
       console.log(data);
       setLeaderboardData(data);
@@ -24,7 +24,7 @@ const App = () => {
     const newPlayer = { name, score };
   
     try {
-      const response = await fetch('http://localhost:3001/add-player', {
+      const response = await fetch('http://localhost:3010/add-player', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,22 +43,22 @@ const App = () => {
   };
   
 
-  const handleDeletePlayer = async (playerName) => {
-    try {
-      const response = await fetch(`http://localhost:3001/delete-player/${encodeURIComponent(playerName)}`, {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        fetchLeaderboardData();
-      } else {
-        console.error('Failed to delete player.');
-      }
-    } catch (error) {
-      console.error('Error deleting player:', error);
+ const handleDeletePlayer = async (playerName) => {
+  try {
+    const response = await fetch(`http://localhost:3010/delete-player/${encodeURIComponent(playerName)}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      fetchLeaderboardData();
+    } else {
+      console.error('Failed to delete player.');
     }
-  };
-  
+  } catch (error) {
+    console.error('Error deleting player:', error);
+  }
+};
+
 
   return (
     <div>
