@@ -24,9 +24,9 @@ connection.connect(error => {
 });
 
 
-app.get('/leaderboard', (req, res) => {
+app.get('/server/leaderboard', (req, res) => {
   const sql = 'SELECT * FROM HighScores ORDER BY Score DESC';
-  
+
   connection.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching leaderboard data:', error);
@@ -37,17 +37,16 @@ app.get('/leaderboard', (req, res) => {
   });
 });
 
-
-app.get('/leaderboard', (req, res) => {
+app.get('/server/leaderboard', (req, res) => {
   res.json(leaderboardData);
   console.log(leaderboardData);
 });
 
-app.post('/add-player', (req, res) => {
-  console.log(name, score );
+app.post('/server/add-player', (req, res) => {
   const { name, score } = req.body;
+
   const sql = 'INSERT INTO HighScores (Name, Score) VALUES (?, ?)';
-  
+
   connection.query(sql, [name, score], (error, results) => {
     if (error) {
       console.error('Error adding player:', error);
@@ -59,11 +58,11 @@ app.post('/add-player', (req, res) => {
 });
 
 
-app.delete('/delete-player/:name', (req, res) => {
+app.delete('/server/delete-player/:name', (req, res) => {
   const playerName = req.params.name;
-  
+
   const sql = 'DELETE FROM HighScores WHERE Name = ?';
-  
+
   connection.query(sql, [playerName], (error, results) => {
     if (error) {
       console.error('Error deleting player:', error);
@@ -75,21 +74,7 @@ app.delete('/delete-player/:name', (req, res) => {
 });
 
 
-app.get('/leaderboard', (req, res) => {
-  const sql = 'SELECT * FROM HighScores ORDER BY Score DESC';
-  
-  connection.query(sql, (error, results) => {
-    if (error) {
-      console.error('Error fetching leaderboard data:', error);
-      res.status(500).json({ success: false, message: 'Failed to fetch leaderboard data' });
-    } else {
-      res.json(results);
-    }
-  });
-});
-
-
-app.delete('/delete-player/:id', (req, res) => {
+app.delete('/server/delete-player/:id', (req, res) => {
   const playerId = parseInt(req.params.id);
   leaderboardData = leaderboardData.filter(player => player.id !== playerId);
   res.json({ success: true, message: 'Player deleted successfully' });

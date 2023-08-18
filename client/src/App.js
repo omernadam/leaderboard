@@ -12,7 +12,7 @@ const App = () => {
 
   const fetchLeaderboardData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/leaderboard');
+      const response = await fetch('http://localhost:3010/server/leaderboard');
       const data = await response.json();
       console.log(data);
       setLeaderboardData(data);
@@ -20,18 +20,19 @@ const App = () => {
       console.error('Error fetching leaderboard data:', error);
     }
   };
+
   const handleAddPlayer = async (name, score) => {
     const newPlayer = { name, score };
-  
+
     try {
-      const response = await fetch('http://localhost:3001/add-player', {
+      const response = await fetch('http://localhost:3010/server/add-player', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newPlayer),
       });
-  
+
       if (response.ok) {
         await fetchLeaderboardData(); // Use await here to ensure data is fetched before proceeding
       } else {
@@ -41,14 +42,14 @@ const App = () => {
       console.error('Error adding player:', error);
     }
   };
-  
+
 
   const handleDeletePlayer = async (playerName) => {
     try {
-      const response = await fetch(`http://localhost:3001/delete-player/${encodeURIComponent(playerName)}`, {
+      const response = await fetch(`http://localhost:3010/server/delete-player/${encodeURIComponent(playerName)}`, {
         method: 'DELETE',
       });
-  
+
       if (response.ok) {
         fetchLeaderboardData();
       } else {
@@ -58,7 +59,7 @@ const App = () => {
       console.error('Error deleting player:', error);
     }
   };
-  
+
 
   return (
     <div>
