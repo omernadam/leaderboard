@@ -12,7 +12,7 @@ const App = () => {
 
   const fetchLeaderboardData = async () => {
     try {
-      const response = await fetch('http://localhost:3010/server/leaderboard');
+      const response = await fetch('http://final-project-lb-766871558.us-east-1.elb.amazonaws.com/server/leaderboard');
       const data = await response.json();
       console.log(data);
       setLeaderboardData(data);
@@ -25,7 +25,7 @@ const App = () => {
     const newPlayer = { name, score };
 
     try {
-      const response = await fetch('http://localhost:3010/server/add-player', {
+      const response = await fetch('http://final-project-lb-766871558.us-east-1.elb.amazonaws.com/server/add-player', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const App = () => {
 
   const handleDeletePlayer = async (playerName) => {
     try {
-      const response = await fetch(`http://localhost:3010/server/delete-player/${encodeURIComponent(playerName)}`, {
+      const response = await fetch(`http://final-project-lb-766871558.us-east-1.elb.amazonaws.com/server/delete-player/${encodeURIComponent(playerName)}`, {
         method: 'DELETE',
       });
 
